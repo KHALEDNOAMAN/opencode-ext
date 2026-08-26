@@ -17,7 +17,9 @@ export const OpenCodeExtAgent: Plugin = async ({ directory }) => {
         model?: { modelID: string; providerID: string; variant?: string }
       }
       const typedOutput = output as {
-        message: { model: { modelID: string; providerID: string; variant?: string } }
+        message: {
+          model: { modelID: string; providerID: string; variant?: string }
+        }
       }
       const agentName = typedInput.agent
       const inputModel = typedInput.model
