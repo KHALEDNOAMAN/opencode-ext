@@ -7,7 +7,6 @@
     "lint": "eslint .",
     "fix": "eslint . --fix",
     "tc": "tsc --noEmit --watch",
-    "json": "tsx ./src/json-schema.ts",
     "dev": "tsdown --config ./tsdown.config.ts --watch",
     "build": "tsdown --config ./tsdown.config.ts"
   },
