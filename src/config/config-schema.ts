@@ -94,6 +94,27 @@ export const armorConfigSchema = z
   })
   .partial()
 
+const agentModelRefSchema = z.object({
+  model: z.string().describe('The model name to use for the agent'),
+  provider: z.string().describe('The provider name to use for the agent'),
+  variant: z
+    .string()
+    .optional()
+    .describe('The variant name to use for the agent'),
+})
+
+const agentModelSchema = z.object({
+  when: agentModelRefSchema.describe('Condition to match the incoming model'),
+  use: agentModelRefSchema.describe('Model to use when condition matches'),
+})
+
+export const agentModelsSchema = z
+  .record(
+    z.string().describe('The name of the agent eg: explore, general etc'),
+    z.array(agentModelSchema)
+  )
+  .describe('List of agent models to use for the application')
+
 export const configSchema = z
   .object({
     env: envConfigSchema.describe(
@@ -102,6 +123,10 @@ export const configSchema = z
 
     armor: armorConfigSchema.describe(
       'Configuration for command blocking, allowing, and injection'
+    ),
+
+    agentModels: agentModelsSchema.describe(
+      'Agent routing configuration keyed by agent name'
     ),
   })
   .partial()

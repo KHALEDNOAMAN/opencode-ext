@@ -26,6 +26,8 @@ export default defineConfig((args) => {
             ),
             'process.env.OPENCODE_EXT_ARMOR_ENABLE_LOG':
               JSON.stringify('true'),
+            'process.env.OPENCODE_EXT_AGENT_ENABLE_LOG':
+              JSON.stringify('true'),
           }
         : {}),
     },
