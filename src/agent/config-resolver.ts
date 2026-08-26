@@ -2,21 +2,19 @@ import fs from 'fs/promises'
 import os from 'os'
 import path from 'path'
 import z from 'zod'
-import { agentModelsSchema } from '../config/config-schema.js'
+import { agentsSchema } from '../config/config-schema.js'
 
-const agentRootConfigSchema = z
-  .object({ agentModels: agentModelsSchema })
-  .partial()
+const agentRootConfigSchema = z.object({ agents: agentsSchema }).partial()
 
 async function readAgentConfigFile(
   input: string
-): Promise<z.infer<typeof agentModelsSchema>> {
+): Promise<z.infer<typeof agentsSchema>> {
   try {
     const data = await fs.readFile(input, 'utf-8')
     const config = await agentRootConfigSchema.parseAsync(JSON.parse(data))
-    return config.agentModels ?? (await agentModelsSchema.parseAsync({}))
+    return config.agents ?? (await agentsSchema.parseAsync({}))
   } catch {
-    return await agentModelsSchema.parseAsync({})
+    return await agentsSchema.parseAsync({})
   }
 }
 
@@ -35,7 +33,7 @@ export async function resolveAgentConfig(workdir: string) {
     readAgentConfigFile(opencodeConfigPath),
   ])
 
-  const merged: z.infer<typeof agentModelsSchema> = {}
+  const merged: z.infer<typeof agentsSchema> = {}
 
   for (const source of [globalConfig, projectConfig, opencodeConfig]) {
     for (const [agent, routes] of Object.entries(source)) {
@@ -44,5 +42,5 @@ export async function resolveAgentConfig(workdir: string) {
     }
   }
 
-  return { agentModels: merged }
+  return { agents: merged }
 }

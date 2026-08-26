@@ -108,7 +108,7 @@ const agentModelSchema = z.object({
   use: agentModelRefSchema.describe('Model to use when condition matches'),
 })
 
-export const agentModelsSchema = z
+export const agentsSchema = z
   .record(
     z.string().describe('The name of the agent eg: explore, general etc'),
     z.array(agentModelSchema)
@@ -125,7 +125,7 @@ export const configSchema = z
       'Configuration for command blocking, allowing, and injection'
     ),
 
-    agentModels: agentModelsSchema.describe(
+    agents: agentsSchema.describe(
       'Agent routing configuration keyed by agent name'
     ),
   })
