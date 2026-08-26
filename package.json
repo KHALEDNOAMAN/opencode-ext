@@ -1,6 +1,22 @@
 {
   "name": "opencode-ext",
   "version": "0.0.1",
+  "description": "OpenCode extensions for loading environment variables and restricting long-running bash commands.",
+  "keywords": [
+    "opencode",
+    "opencode-plugin",
+    "env",
+    "armor",
+    "cli"
+  ],
+  "homepage": "https://github.com/NazmusSayad/opencode-ext#readme",
+  "bugs": {
+    "url": "https://github.com/NazmusSayad/opencode-ext/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NazmusSayad/opencode-ext.git"
+  },
   "scripts": {
     "test": "vitest run",
     "test:watch": "vitest watch",

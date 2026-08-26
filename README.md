@@ -29,7 +29,7 @@ objects use the feature-specific merge behavior described below.
 
 ```json
 {
-  "$schema": "https://github.com/NazmusSayad/opencode-kit/raw/refs/heads/schema/schema.json",
+  "$schema": "https://github.com/NazmusSayad/opencode-ext/raw/refs/heads/schema/schema.json",
   "env": {
     "files": [".env", ".env.local"],
     "define": {
