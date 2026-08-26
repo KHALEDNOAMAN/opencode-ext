@@ -5,7 +5,10 @@ import packageJSON from './package.json' with { type: 'json' }
 export default defineConfig((args) => {
   return {
     name: packageJSON.name,
-    entry: './src/index.ts',
+    entry: {
+      index: './src/index.ts',
+      bin: './src/cli/bin.ts',
+    },
 
     clean: true,
     minify: true,
@@ -17,10 +20,12 @@ export default defineConfig((args) => {
     define: {
       ...(args.watch
         ? {
-            'process.env.OPENCODE_ENV_LOG_ENABLED': JSON.stringify('true'),
-            'process.env.OPENCODE_ENV_LOG_PATH': JSON.stringify(
+            'process.env.OPENCODE_EXT_ENV_LOG_ENABLED': JSON.stringify('true'),
+            'process.env.OPENCODE_EXT_ENV_LOG_PATH': JSON.stringify(
               path.join(process.cwd(), './tmp')
             ),
+            'process.env.OPENCODE_EXT_ARMOR_ENABLE_LOG':
+              JSON.stringify('true'),
           }
         : {}),
     },
@@ -28,14 +33,16 @@ export default defineConfig((args) => {
     deps: {
       neverBundle: [
         /node:/gim,
-        ...getExternal((packageJSON as any).dependencies),
+        ...getExternal(packageJSON),
       ],
     },
   }
 })
 
-function getExternal(dependencies: unknown) {
-  return Object.keys((dependencies ?? {}) as Record<string, string>).map(
-    (dep) => new RegExp(`(^${dep}$)|(^${dep}/)`)
+function getExternal(packageMetadata: {
+  dependencies?: Record<string, string>
+}) {
+  return Object.keys(packageMetadata.dependencies ?? {}).map(
+    (dependency) => new RegExp(`(^${dependency}$)|(^${dependency}/)`)
   )
 }

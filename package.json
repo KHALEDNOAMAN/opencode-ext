@@ -8,11 +8,15 @@
     "lint:fix": "eslint . --fix",
     "typecheck": "tsc --noEmit",
     "typecheck:watch": "tsc --noEmit --watch",
+    "json": "tsx ./src/json-schema.ts",
     "dev": "tsdown --config ./tsdown.config.ts --watch",
     "build": "tsdown --config ./tsdown.config.ts"
   },
   "type": "module",
   "main": "./dist/index.mjs",
+  "bin": {
+    "opencode-ext": "./dist/bin.mjs"
+  },
   "devDependencies": {
     "@commander-js/extra-typings": "^15.0.0",
     "@eslint/compat": "^1.4.0",
